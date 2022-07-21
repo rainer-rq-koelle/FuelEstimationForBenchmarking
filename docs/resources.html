@@ -86,31 +86,52 @@ code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
+</style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Fuel Estimation For Operational Performance Benchmarking: About this site</title>
+  <title>Fuel Estimation For Operational Performance Benchmarking: Resources</title>
 
-  <meta property="description" itemprop="description" content="Operational performance benchmarking - joint project DECEA/PRU"/>
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Fuel Estimation For Operational Performance Benchmarking: About this site"/>
+  <meta property="og:title" content="Fuel Estimation For Operational Performance Benchmarking: Resources"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Operational performance benchmarking - joint project DECEA/PRU"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Fuel Estimation For Operational Performance Benchmarking"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Fuel Estimation For Operational Performance Benchmarking: About this site"/>
-  <meta property="twitter:description" content="Operational performance benchmarking - joint project DECEA/PRU"/>
+  <meta property="twitter:title" content="Fuel Estimation For Operational Performance Benchmarking: Resources"/>
 
   <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=ICAO Carbon Emissions Calculator Methodology 11;citation_publication_date=2018;citation_author= ICAO"/>
+  <meta name="citation_reference" content="citation_title=ICAO Engine Emissions Databank;citation_author= ICAO"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["About this site"]},{"type":"character","attributes":{},"value":["Operational performance benchmarking - joint project DECEA/PRU"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["Resources"]},{"type":"character","attributes":{},"value":["ans_perf_bib.bib"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2087,7 +2108,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"About this site","description":"Operational performance benchmarking - joint project DECEA/PRU","authors":[]}
+{"title":"Resources","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2111,21 +2132,42 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>About this site</h1>
+<h1>Resources</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Operational performance benchmarking - joint project
-DECEA/PRU</p></p>
+
 </div>
 
 
 <div class="d-article">
-<p>This site / work origingated during the 2022 edition of the
-Operational Performance Comparision between Brazil and Europe.</p>
-<p>The work is a joint project by DECEA (Department of Airspace Control)
-and EUROCONTROL’s Performance Review Unit.</p>
+<p>This page lists some of the resources used and how we prepared
+it.</p>
+<p>Publicly available data on aircraft, engine / fuel burn is limited /
+not readily available.</p>
+<ul>
+<li>ICAO Engine Emission Databank (<span class="citation"
+data-cites="icao_engine_databank">ICAO (<a
+href="#ref-icao_engine_databank"
+role="doc-biblioref">n.d.</a>)</span>)</li>
+<li>ICAO Carbon Emission Calculator Methodology, version 11, 2018 (<span
+class="citation" data-cites="icao_emission_calculator_2018">ICAO (<a
+href="#ref-icao_emission_calculator_2018"
+role="doc-biblioref">2018</a>)</span>)</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-icao_emission_calculator_2018" class="csl-entry"
+role="doc-biblioentry">
+ICAO. 2018. <span>“<span>ICAO Carbon Emissions Calculator
+Methodology</span> 11.”</span>
+</div>
+<div id="ref-icao_engine_databank" class="csl-entry"
+role="doc-biblioentry">
+———. n.d. <span>“<span>ICAO Engine Emissions Databank</span>.”</span>
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2137,7 +2179,10 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
+<div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
+</div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->

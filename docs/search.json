@@ -6,14 +6,28 @@
       "description": "Operational performance benchmarking - joint project DECEA/PRU",
       "author": [],
       "contents": "\nThis site / work origingated during the 2022 edition of the\nOperational Performance Comparision between Brazil and Europe.\nThe work is a joint project by DECEA (Department of Airspace Control)\nand EUROCONTROL’s Performance Review Unit.\n\n\n\n",
-      "last_modified": "2022-07-21T19:24:50+02:00"
+      "last_modified": "2022-07-21T21:09:05+02:00"
     },
     {
       "path": "index.html",
       "title": "Fuel Estimation For Operational Performance Benchmarking",
       "author": [],
       "contents": "\nWelcome!\nThis is an exploratory project in support of the on-going\nBrazil-Europe Operational Performance Comparison. The aim is to develop\na data-driven approach based on the existing operational efficiency\nindicator methodologies.\n\n\n\n",
-      "last_modified": "2022-07-21T19:24:51+02:00"
+      "last_modified": "2022-07-21T21:09:06+02:00"
+    },
+    {
+      "path": "model.html",
+      "title": "Model",
+      "author": [],
+      "contents": "\nTo measure operational inefficiencies, the ICAO GANP proposes a set\nof indicators:\nsurface movement phase: additional taxi-in and taxi-out time\napproach phase: additional time in terminal airspace\nThese indicators compare the observed (actual) movement duration,\ne.g. from off-block to take-off, with an associated reference time.\nReference times are calculated for flights with similar characteristics.\nFrom each sub-population the 20th percentile of the observed movement\ndurations is calculated as the reference time.\nNote: provide details to the algorithms.\nFrom an environmental perspective, fuel burn is directly linked to\nengine time. Accordingly, inefficiencies, i.e. additional times,\nrepresent excessive engine time (and associated fuel burn). Green-house\ngas emissions are a product of fuel burn. Thus estimating the fuel burn\nper flight phase or measured inefficiency allows to quantify the\nenvironmental impact.\nFuel burn estimation requires a mapping of engine and airframe. This\nmapping is further complicated by the fact that various aircraft of the\nsame family may be fitted with different engines. Accordingly, this work\nis not - yet - aiming to establish a “perfect” aircraft/engine mapping.\nThe associated mapping is based on representative engines (and based on\nopen data / resources).\nBenchmarking\nand Fuel Estimation in Arrival Phase\nuse ICAO Carbon Emission Calculator “data”\naerodrome pair estimation based on web-interface\nstage length based scaling\n\ndetermine “average” fuel burn for “average” flight during last\n100NM, and associate this fuel burn with the reference time\ncalculate\ntotal fuel burn during arrival phase\nexcessive fuel burn for additional time in terminal airspace\n\nBenchmarking\nand Fuel Estimation in Taxi-in and Taxi-Out Phase\nFor our study we developed a lookup table for aircraft/representative\nengines and linked this to the ICAO Engine Databank (ICAO (n.d.)).\nFor taxi-in, we only apply the assumed 7% thrust setting of the\nEngine Databank. Note: this does not take into account reverse thrust\noperations to decelerate the aircraft during its landing roll.\nFor operational performance benchmarking the taxi-out measure is\ndetermined by deriving the taxi time as the difference between the\nactual off-block time (AOBT) and the actual take-off time (ATOT). This\nincludes the take-off roll. The ICAO LTO time-in-mode assume a 0.7min\n(=42 sec) take-off roll. From an operational perspective this is a\nreasonable assumption for the majority of commercial aircraft.\nNote: The take-off roll assumption needs to be adapted for piston and\nprivate aircraft operations (e.g. C172).\n\n\n\nICAO. n.d. “ICAO Engine Emissions Databank.”\n\n\n\n\n",
+      "last_modified": "2022-07-21T21:09:06+02:00"
+    },
+    {
+      "path": "resources.html",
+      "title": "Resources",
+      "author": [],
+      "contents": "\nThis page lists some of the resources used and how we prepared\nit.\nPublicly available data on aircraft, engine / fuel burn is limited /\nnot readily available.\nICAO Engine Emission Databank (ICAO (n.d.))\nICAO Carbon Emission Calculator Methodology, version 11, 2018 (ICAO (2018))\n\n\n\nICAO. 2018. “ICAO Carbon Emissions Calculator\nMethodology 11.”\n\n\n———. n.d. “ICAO Engine Emissions Databank.”\n\n\n\n\n",
+      "last_modified": "2022-07-21T21:09:07+02:00"
     }
   ],
   "collections": []

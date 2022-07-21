@@ -86,31 +86,51 @@ code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
+</style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Fuel Estimation For Operational Performance Benchmarking: About this site</title>
+  <title>Fuel Estimation For Operational Performance Benchmarking: Model</title>
 
-  <meta property="description" itemprop="description" content="Operational performance benchmarking - joint project DECEA/PRU"/>
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Fuel Estimation For Operational Performance Benchmarking: About this site"/>
+  <meta property="og:title" content="Fuel Estimation For Operational Performance Benchmarking: Model"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Operational performance benchmarking - joint project DECEA/PRU"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Fuel Estimation For Operational Performance Benchmarking"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Fuel Estimation For Operational Performance Benchmarking: About this site"/>
-  <meta property="twitter:description" content="Operational performance benchmarking - joint project DECEA/PRU"/>
+  <meta property="twitter:title" content="Fuel Estimation For Operational Performance Benchmarking: Model"/>
 
   <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=ICAO Engine Emissions Databank;citation_author= ICAO"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["About this site"]},{"type":"character","attributes":{},"value":["Operational performance benchmarking - joint project DECEA/PRU"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["Model"]},{"type":"character","attributes":{},"value":["ans_perf_bib.bib"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2087,7 +2107,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"About this site","description":"Operational performance benchmarking - joint project DECEA/PRU","authors":[]}
+{"title":"Model","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2111,21 +2131,82 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>About this site</h1>
+<h1>Model</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Operational performance benchmarking - joint project
-DECEA/PRU</p></p>
+
 </div>
 
 
 <div class="d-article">
-<p>This site / work origingated during the 2022 edition of the
-Operational Performance Comparision between Brazil and Europe.</p>
-<p>The work is a joint project by DECEA (Department of Airspace Control)
-and EUROCONTROL’s Performance Review Unit.</p>
+<p>To measure operational inefficiencies, the ICAO GANP proposes a set
+of indicators:</p>
+<ul>
+<li>surface movement phase: additional taxi-in and taxi-out time</li>
+<li>approach phase: additional time in terminal airspace</li>
+</ul>
+<p>These indicators compare the observed (actual) movement duration,
+e.g. from off-block to take-off, with an associated reference time.
+Reference times are calculated for flights with similar characteristics.
+From each sub-population the 20th percentile of the observed movement
+durations is calculated as the reference time.</p>
+<p>Note: provide details to the algorithms.</p>
+<p>From an environmental perspective, fuel burn is directly linked to
+engine time. Accordingly, inefficiencies, i.e. additional times,
+represent excessive engine time (and associated fuel burn). Green-house
+gas emissions are a product of fuel burn. Thus estimating the fuel burn
+per flight phase or measured inefficiency allows to quantify the
+environmental impact.</p>
+<p>Fuel burn estimation requires a mapping of engine and airframe. This
+mapping is further complicated by the fact that various aircraft of the
+same family may be fitted with different engines. Accordingly, this work
+is not - yet - aiming to establish a “perfect” aircraft/engine mapping.
+The associated mapping is based on representative engines (and based on
+open data / resources).</p>
+<h1 id="benchmarking-and-fuel-estimation-in-arrival-phase">Benchmarking
+and Fuel Estimation in Arrival Phase</h1>
+<ul>
+<li>use ICAO Carbon Emission Calculator “data”
+<ul>
+<li>aerodrome pair estimation based on web-interface</li>
+<li>stage length based scaling</li>
+</ul></li>
+<li>determine “average” fuel burn for “average” flight during last
+100NM, and associate this fuel burn with the reference time</li>
+<li>calculate
+<ul>
+<li>total fuel burn during arrival phase</li>
+<li>excessive fuel burn for additional time in terminal airspace</li>
+</ul></li>
+</ul>
+<h1
+id="benchmarking-and-fuel-estimation-in-taxi-in-and-taxi-out-phase">Benchmarking
+and Fuel Estimation in Taxi-in and Taxi-Out Phase</h1>
+<p>For our study we developed a lookup table for aircraft/representative
+engines and linked this to the ICAO Engine Databank (<span
+class="citation" data-cites="icao_engine_databank">ICAO (<a
+href="#ref-icao_engine_databank"
+role="doc-biblioref">n.d.</a>)</span>).</p>
+<p>For taxi-in, we only apply the assumed 7% thrust setting of the
+Engine Databank. Note: this does not take into account reverse thrust
+operations to decelerate the aircraft during its landing roll.</p>
+<p>For operational performance benchmarking the taxi-out measure is
+determined by deriving the taxi time as the difference between the
+actual off-block time (AOBT) and the actual take-off time (ATOT). This
+includes the take-off roll. The ICAO LTO time-in-mode assume a 0.7min
+(=42 sec) take-off roll. From an operational perspective this is a
+reasonable assumption for the majority of commercial aircraft.</p>
+<p>Note: The take-off roll assumption needs to be adapted for piston and
+private aircraft operations (e.g. C172).</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-icao_engine_databank" class="csl-entry"
+role="doc-biblioentry">
+ICAO. n.d. <span>“<span>ICAO Engine Emissions Databank</span>.”</span>
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2137,7 +2218,10 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
+<div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
+</div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->

@@ -1,0 +1,11 @@
+---
+title: "Resources"
+bibliography: ans_perf_bib.bib
+---
+
+This page lists some of the resources used and how we prepared it.
+
+Publicly available data on aircraft, engine / fuel burn is limited / not readily available.
+
+* ICAO Engine Emission Databank (@icao_engine_databank)
+* ICAO Carbon Emission Calculator Methodology, version 11, 2018 (@icao_emission_calculator_2018)

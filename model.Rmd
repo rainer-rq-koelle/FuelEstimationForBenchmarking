@@ -1,0 +1,51 @@
+---
+title: "Model"
+bibliography: ans_perf_bib.bib
+---
+
+To measure operational inefficiencies, the ICAO GANP proposes a set of indicators:
+
+* surface movement phase: additional taxi-in and taxi-out time
+* approach phase: additional time in terminal airspace
+
+These indicators compare the observed (actual) movement duration, e.g. from off-block to take-off, with an associated reference time.
+Reference times are calculated for flights with similar characteristics. 
+From each sub-population the 20th percentile of the observed movement durations is calculated as the reference time.
+
+Note: provide details to the algorithms.
+
+From an environmental perspective, fuel burn is directly linked to engine time.
+Accordingly, inefficiencies, i.e. additional times, represent excessive engine time (and associated fuel burn).
+Green-house gas emissions are a product of fuel burn. 
+Thus estimating the fuel burn per flight phase or measured inefficiency allows to quantify the environmental impact.
+
+Fuel burn estimation requires a mapping of engine and airframe.
+This mapping is further complicated by the fact that various aircraft of the same family may be fitted with different engines. 
+Accordingly, this work is not - yet - aiming to establish a "perfect"  aircraft/engine mapping.
+The associated mapping is based on representative engines (and based on open data / resources).
+
+# Benchmarking and Fuel Estimation in Arrival Phase
+
+* use ICAO Carbon Emission Calculator "data"
+  + aerodrome pair estimation based on web-interface
+  + stage length based scaling
+* determine "average" fuel burn for "average" flight during last 100NM, and associate this fuel burn with the reference time
+* calculate 
+  + total fuel burn during arrival phase
+  + excessive fuel burn for additional time in terminal airspace
+  
+# Benchmarking and Fuel Estimation in Taxi-in and Taxi-Out Phase
+
+For our study we developed a lookup table for aircraft/representative engines and linked this to the ICAO Engine Databank (@icao_engine_databank).
+
+For taxi-in, we only apply the assumed 7% thrust setting of the Engine Databank.
+Note: this does not take into account reverse thrust operations to decelerate the aircraft during its landing roll.
+
+For operational performance benchmarking the taxi-out measure is determined by deriving the taxi time as the difference between the actual off-block time (AOBT) and the actual take-off time (ATOT).
+This includes the take-off roll.
+The ICAO LTO time-in-mode assume a 0.7min (=42 sec) take-off roll. 
+From an operational perspective this is a reasonable assumption for the majority of commercial aircraft. 
+
+Note: The take-off roll assumption needs to be adapted for piston and private aircraft operations (e.g. C172).
+
+
