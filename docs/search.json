@@ -1,0 +1,20 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this site",
+      "description": "Operational performance benchmarking - joint project DECEA/PRU",
+      "author": [],
+      "contents": "\nThis site / work origingated during the 2022 edition of the\nOperational Performance Comparision between Brazil and Europe.\nThe work is a joint project by DECEA (Department of Airspace Control)\nand EUROCONTROL’s Performance Review Unit.\n\n\n\n",
+      "last_modified": "2022-07-21T19:24:50+02:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Fuel Estimation For Operational Performance Benchmarking",
+      "author": [],
+      "contents": "\nWelcome!\nThis is an exploratory project in support of the on-going\nBrazil-Europe Operational Performance Comparison. The aim is to develop\na data-driven approach based on the existing operational efficiency\nindicator methodologies.\n\n\n\n",
+      "last_modified": "2022-07-21T19:24:51+02:00"
+    }
+  ],
+  "collections": []
+}

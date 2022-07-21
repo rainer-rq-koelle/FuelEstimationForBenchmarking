@@ -1,0 +1,15 @@
+name: "FuelEstimationForBenchmarking"
+title: "Fuel Estimation For Operational Performance Benchmarking"
+description: |
+  This is an exploratory project and work in progress!
+  Environmental Sustainability is a key priority for air transportation and air navigation.
+  Within the operational performance benchmarking community there is a need to develop an approach to support the conversion of operational inefficiencies
+  into fuel burn and associated emission estimates.
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article

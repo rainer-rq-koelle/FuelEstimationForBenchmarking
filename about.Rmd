@@ -1,0 +1,13 @@
+---
+title: "About this site"
+description: |
+  Operational performance benchmarking - joint project DECEA/PRU
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+This site / work origingated during the 2022 edition of the Operational Performance Comparision between Brazil and Europe. 
+
+The work is a joint project by DECEA (Department of Airspace Control) and EUROCONTROL's Performance Review Unit.
