@@ -36,6 +36,8 @@ The associated mapping is based on representative engines (and based on open dat
   
 # Benchmarking and Fuel Estimation in Taxi-in and Taxi-Out Phase
 
+>introduce LTO and modelling assumptions --> "aircraft engine exhaust emissions ... (Masiol and Harrison)". 
+
 For our study we developed a lookup table for aircraft/representative engines and linked this to the ICAO Engine Databank (@icao_engine_databank).
 
 For taxi-in, we only apply the assumed 7% thrust setting of the Engine Databank.
