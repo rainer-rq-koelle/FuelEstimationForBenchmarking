@@ -86,6 +86,27 @@ code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
+</style>
 
   <!--radix_placeholder_meta_tags-->
   <title>Fuel Estimation For Operational Performance Benchmarking: Fuel Burn Estimation for Operational Performance Benchmarking</title>
@@ -116,6 +137,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <meta name="citation_author_institution" content="EUROCONTROL, Performance Review Unit"/>
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=Industry Statistics Fact Sheet;citation_publication_date=2019;citation_author= IATA"/>
+  <meta name="citation_reference" content="citation_title=Doc 9750, Capacity &amp; Efficiency, Global Air Navigation Plan 2016-2030;citation_publication_date=2019;citation_publisher=International Civil Aviation Organization;citation_author=Doc 9750, Capacity &amp; Efficiency, Global Air Navigation Plan 2016-2030"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
@@ -2135,16 +2158,105 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
-<p>First stab at an article summarising this research.</p>
+<p>First stab at an article summarising this research.<br />
+This is <strong>work in progress</strong>. Please consult this page for
+updates in the future.</p>
 <h1 class="unnumbered" id="abstract">Abstract</h1>
 <h1 id="introduction">Introduction</h1>
+<p>Across the globe states have implemented <em>Green Deal</em> policies
+and priorities. Air transportation accounts for about 2-3% of annual CO2
+emissions, however, the total amount of CO2 emissions constantly
+increased pre-COVID.</p>
+
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:iataco2"></span>
+<img src="paper-01_files/figure-html5/iataco2-1.png" alt="Annual emissions by commercial aircraft 2004-2021" width="624" />
+<p class="caption">
+Figure 1: Annual emissions by commercial aircraft 2004-2021
+</p>
+</div>
+</div>
+<p>Fig <a href="#fig:iataco2">1</a> shows the total emissions of commercial flights
+as reported by IATA <span class="citation"
+data-cites="iataIndustryStatisticsFact2019">(<a
+href="#ref-iataIndustryStatisticsFact2019" role="doc-biblioref">IATA
+2019</a>)</span>.</p>
+<p>Levers for fuel reduction:</p>
+<ul>
+<li>operational efficiency</li>
+<li>market-based measures</li>
+<li>sustainable aviation fuel</li>
+<li>new aircraft propulsion and airframes</li>
+</ul>
+<p>A wider use and pick-up of sustainable aviation fuel, and new
+aircraft propulsion technologies or aircraft design requires further
+research. Despite the introduction of an initial market-based mechanism,
+immediate action to curb fuel burn and CO2 emissions rests with
+improvements of operational efficiency.</p>
+<p>ICAO promotes a performance-based approach. The Global Air Navigation
+Plan (GANP) proposes indicators for regional benchmarking <span
+class="citation" data-cites="icao_doc9750_2019">(<a
+href="#ref-icao_doc9750_2019" role="doc-biblioref">ICAO
+2019</a>)</span>. However, there is no detailed guidance on how to
+measure <em>additional fuel burn</em>.</p>
+<p>The contribution of this paper are as follows:</p>
+<ul>
+<li>development of supporting material to estimate fuel burn / CO2
+emissions as part of the operational performance benchmarking</li>
+<li>development and application of a the approach to additional time in
+terminal airspace and surface movement phases (i.e. taxi-in and
+taxi-out)</li>
+</ul>
 <h1 id="background">Background</h1>
+<h2 id="icao-ganp-key-performance-indicators">ICAO GANP Key Performance
+Indicators</h2>
+<blockquote>
+<p>provide overview of GANP, KPIs zoom in on ASMA, taxi-in/taxi-out</p>
+</blockquote>
+<h1 id="conceptual-approach">Conceptual Approach</h1>
+<p>Operational inefficiencies typically increase the aircraft flying
+time (i.e. airborne and surface movement times) and , thus, engine
+running time. Engine time is directly linked to fuel burn and associated
+emissions and pollutants. In that respect, inefficiencies contribute to
+the ditremental effect of excessive emissions to climate change.</p>
+<p>Aircraft engines produce various types of emissions. These emissions
+include carbon dioxide <span class="math inline">\(CO_2\)</span>, water
+vapour <span class="math inline">\({H_2}O\)</span>, nitrogen oxides
+nitrogen oxides (NOX), carbon monoxide (CO), unburned hydrocarbons (HC),
+sulfur oxides (SOX), particulate matter (PM), and other trace compounds.
+About 70 percent of aircraft emissions are CO2; followed by H2O at
+slightly less than 30% while the rest of the pollutant represent less
+than 1 percent each [source]. CO2 and H2O form significant amount of GHG
+emissions that can trigger climate change while NOX, CO, HC, SOX and
+particulate matter are always associated with air quality and
+subsequently public health.</p>
+<p>This research focuses on fuel burn and CO2 emissions stemming from
+operational inefficiencies during the arrival and surface movement phase
+of flight.</p>
 <h1 id="method-and-materials">Method and Materials</h1>
+<h2 id="data">Data</h2>
+<ul>
+<li>analytic data for ASMA, taxi-in/out</li>
+<li>fuel burn estimate data</li>
+</ul>
 <h1 id="results-and-discussion">Results and Discussion</h1>
 <h1 id="conclusions">Conclusions</h1>
-<h1 class="unnumbered" id="references">References</h1>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-iataIndustryStatisticsFact2019" class="csl-entry"
+role="doc-biblioentry">
+IATA. 2019. <span>“Industry <span>Statistics Fact Sheet</span>.”</span>
+</div>
+<div id="ref-icao_doc9750_2019" class="csl-entry"
+role="doc-biblioentry">
+ICAO. 2019. <em>Doc 9750, <span>Capacity</span> &amp;
+<span>Efficiency</span>, <span>Global Air Navigation Plan</span>
+2016-2030</em>. Sixth Edition. <span>Montreal, Canada</span>:
+<span>International Civil Aviation Organization</span>.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2152,6 +2264,15 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
