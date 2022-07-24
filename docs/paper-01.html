@@ -88,26 +88,38 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Fuel Estimation For Operational Performance Benchmarking</title>
+  <title>Fuel Estimation For Operational Performance Benchmarking: Fuel Burn Estimation for Operational Performance Benchmarking</title>
 
 
 
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2022-07-20"/>
+  <meta property="article:created" itemprop="dateCreated" content="2022-07-20"/>
+  <meta name="article:author" content="Rainer Koelle"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Fuel Estimation For Operational Performance Benchmarking"/>
+  <meta property="og:title" content="Fuel Estimation For Operational Performance Benchmarking: Fuel Burn Estimation for Operational Performance Benchmarking"/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Fuel Estimation For Operational Performance Benchmarking"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Fuel Estimation For Operational Performance Benchmarking"/>
+  <meta property="twitter:title" content="Fuel Estimation For Operational Performance Benchmarking: Fuel Burn Estimation for Operational Performance Benchmarking"/>
 
+  <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
+  <meta name="citation_title" content="Fuel Estimation For Operational Performance Benchmarking: Fuel Burn Estimation for Operational Performance Benchmarking"/>
+  <meta name="citation_fulltext_html_url" content="https://rstudio.github.io/distill"/>
+  <meta name="citation_online_date" content="2022/07/20"/>
+  <meta name="citation_publication_date" content="2022/07/20"/>
+  <meta name="citation_author" content="Rainer Koelle"/>
+  <meta name="citation_author_institution" content="EUROCONTROL, Performance Review Unit"/>
   <!--/radix_placeholder_meta_tags-->
+  
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","site"]}},"value":[{"type":"character","attributes":{},"value":["Fuel Estimation For Operational Performance Benchmarking"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["distill::distill_website"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","date","author","citation_url","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["Fuel Burn Estimation for Operational Performance Benchmarking"]},{"type":"character","attributes":{},"value":["July 2022"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["first_name","last_name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Rainer"]},{"type":"character","attributes":{},"value":["Koelle"]},{"type":"character","attributes":{},"value":["EUROCONTROL, Performance Review Unit"]},{"type":"character","attributes":{},"value":["https://example.com/spacelysprokets"]},{"type":"character","attributes":{},"value":["0000-0003-2810-1404"]}]}]},{"type":"character","attributes":{},"value":["https://rstudio.github.io/distill"]},{"type":"character","attributes":{},"value":["ANS_Perf_Book.bib"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2084,7 +2096,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Fuel Estimation For Operational Performance Benchmarking","authors":[]}
+{"title":"Fuel Burn Estimation for Operational Performance Benchmarking","authors":[{"author":"Rainer Koelle","authorURL":"#","affiliation":"EUROCONTROL, Performance Review Unit","affiliationURL":"https://example.com/spacelysprokets","orcidID":"0000-0003-2810-1404"}],"publishedDate":"2022-07-20T00:00:00.000+02:00","citationText":"Koelle, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2109,58 +2121,28 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Fuel Estimation For Operational Performance Benchmarking</h1>
+<h1>Fuel Burn Estimation for Operational Performance Benchmarking</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 
 </div>
 
+<div class="d-byline">
+  
+  true
+  
+<br/>July 2022
+</div>
 
 <div class="d-article">
-<h1 id="welcome">Welcome!</h1>
-<p>This is an exploratory project in support of the on-going
-Brazil-Europe Operational Performance Comparison. The aim is to develop
-a data-driven approach based on the existing operational efficiency
-indicator methodologies.</p>
-<h1 id="overview">Overview</h1>
-<p>Air transportation has grown over the past decades. Air traffic is
-projected to recover from the unprecedented decrease in demand during
-the COVID pandemic period, 2020-2021.</p>
-<p>Across the globe, states have defined ambitious political goals to
-address the impact of climate change. Accordingly, there is a higher
-interest in monitoring/estimating the impact of operational
-(in)efficiency.</p>
-<p>Operational inefficiencies typically increase the aircraft flying
-time (i.e. airborne and surface movement times) and , thus, engine
-running time. Engine time is directly linked to fuel burn and associated
-emissions and pollutants. In that respect, inefficiencies contribute to
-the ditremental effect of excessive emissions to climate change.</p>
-<p>Aircraft engines produce various types of emissions. These emissions
-include carbon dioxide <span class="math inline">\(CO_2\)</span>, water
-vapour <span class="math inline">\({H_2}O\)</span>, nitrogen oxides
-nitrogen oxides (NOX), carbon monoxide (CO), unburned hydrocarbons (HC),
-sulfur oxides (SOX), particulatematter (PM), and other trace compounds.
-About 70 percent of aircraft emissions are CO2; followed by H2O
-atslightly less than 30% while the rest of the pollutant represent less
-than 1 percent each [source]. CO2 and H2O formsignificant amount of GHG
-emissions that can trigger climate change while NOX, CO, HC, SOX and
-particulate matterare always associated with air quality and
-subsequently public health</p>
-<p>Operational performance benchmarking aims at understanding the
-similarities and differences of operational practices/concepts,
-technological enablers, and strategic and operational priorities in
-different regions. The practice of operational performance benchmarking
-is well established through regular bi-regional (e.g. US/EU, BRA-EUR,
-CHN-EUR) or multi-regional (PWBG) comparison reports. These
-reports/groups build their joint work on harmonised practices and
-jointly agreed methods. ICAO is promoting a performance-based approach
-and associated benchmarking. Through its Global Air Navigation Plan
-(GANP), ICAO proposes a set of performance indicators to measure
-operational performance. However, to date, this set of indicators does
-not cater specifically for Environmental (Sustainability). As an initial
-step, there is an intetest to develop tools/approaches for converting
-operational inefficiencies into additional fuel burn/<span
-class="math inline">\(CO_2\)</span> emissions.</p>
+<p>First stab at an article summarising this research.</p>
+<h1 class="unnumbered" id="abstract">Abstract</h1>
+<h1 id="introduction">Introduction</h1>
+<h1 id="background">Background</h1>
+<h1 id="method-and-materials">Method and Materials</h1>
+<h1 id="results-and-discussion">Results and Discussion</h1>
+<h1 id="conclusions">Conclusions</h1>
+<h1 class="unnumbered" id="references">References</h1>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
@@ -2170,20 +2152,24 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <div class="d-appendix">
 </div>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
+<div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
+<h3 id="citation">Citation</h3>
+<p>For attribution, please cite this work as</p>
+<pre class="citation-appendix short">Koelle (2022, July 20). Fuel Estimation For Operational Performance Benchmarking: Fuel Burn Estimation for Operational Performance Benchmarking. Retrieved from https://rstudio.github.io/distill</pre>
+<p>BibTeX citation</p>
+<pre class="citation-appendix long">@misc{koelle2022fuel,
+  author = {Koelle, Rainer},
+  title = {Fuel Estimation For Operational Performance Benchmarking: Fuel Burn Estimation for Operational Performance Benchmarking},
+  url = {https://rstudio.github.io/distill},
+  year = {2022}
+}</pre>
+</div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->

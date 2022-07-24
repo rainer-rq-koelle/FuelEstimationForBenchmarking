@@ -1,6 +1,6 @@
 ---
 title: "Model"
-bibliography: ans_perf_bib.bib
+bibliography: ANS_Perf_Book.bib
 ---
 
 To measure operational inefficiencies, the ICAO GANP proposes a set of indicators:
@@ -37,6 +37,9 @@ The associated mapping is based on representative engines (and based on open dat
 # Benchmarking and Fuel Estimation in Taxi-in and Taxi-Out Phase
 
 >introduce LTO and modelling assumptions --> "aircraft engine exhaust emissions ... (Masiol and Harrison)". 
+
+ICAO defined a default LTO cycle consisting of distinct phases: takeoff, climb, approach, and taxi/ground idle.
+These phases are characterised with specified thrust levels and times-in-mode.
 
 For our study we developed a lookup table for aircraft/representative engines and linked this to the ICAO Engine Databank (@icao_engine_databank).
 

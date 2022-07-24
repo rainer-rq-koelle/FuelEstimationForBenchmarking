@@ -1,6 +1,6 @@
 ---
 title: "Resources"
-bibliography: ans_perf_bib.bib
+bibliography: ANS_Perf_Book.bib
 ---
 
 This page lists some of the resources used and how we prepared it.

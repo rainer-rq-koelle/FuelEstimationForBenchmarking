@@ -1,0 +1,29 @@
+---
+title: "Fuel Burn Estimation for Operational Performance Benchmarking"
+date: "July 2022"
+author:
+  - first_name: "Rainer"
+    last_name: "Koelle" 
+    #url: https://example.com/norajones
+    affiliation: "EUROCONTROL, Performance Review Unit"
+    affiliation_url: https://example.com/spacelysprokets
+    orcid_id: 0000-0003-2810-1404
+citation_url: https://rstudio.github.io/distill
+bibliography: ANS_Perf_Book.bib
+---
+
+First stab at an article summarising this research.
+
+# Abstract{-}
+
+# Introduction
+
+# Background
+
+# Method and Materials
+
+# Results and Discussion
+
+# Conclusions
+
+# References {-}
