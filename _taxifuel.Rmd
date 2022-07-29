@@ -7,6 +7,18 @@ output:
 date: '2022-07-26'
 ---
 
+As described in ICAO Doc 9889, aircraft emissions include emissions from the main engines, the APU
+(auxiliary power units), main engine start-up and the particulate matter emissions from brake and tyre wear. In
+this section, emissions from the aircraft main engines and the APU are calculated using different method
+approaches and variations in performance affecting parameters.
+3.1.1. Aircraft Main Engines
+Emission inventories of aircraft in the vicinity of airports are traditionally calculated using ICAO engine exhaust
+emission data and the ICAO reference LTO cycle, the latter sometimes adapted to airport specific taxi times.
+Initially intended for certification purposes, the LTO cycle cannot sufficiently account for operational issues
+(flex-rated take-off, climb profiles). Consequently, an operational aircraft LTO cycle has also been defined as
+the basis for performance based modelling (Table 2).
+
+
 ```{r setup, include=FALSE, echo=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -14,6 +26,10 @@ library(tidyverse)
 # set defaults
 theme_set(theme_minimal())
 ```
+
+# Inputs
+
+## Loading data from OpenAvEm
 
 ```{r, eval = FALSE}
 #openavem aircraft data
@@ -134,5 +150,42 @@ arrs_fuel %>% mutate(DOF = lubridate::date(AIBT)) %>% select(DOF, TXIT_FUEL, ADD
   
   ggplot() +
     geom_col(aes(x = DOF, y = FUEL, fill = COMPONENT), position = position_stack())
+```
+
+## ACERT
+
+```{r}
+type_engine_map <- read_csv("./data-analytic/type_engine_map.csv", show_col_types = FALSE)
+```
+
+
+ACERT times-in-mode
+
+```{r}
+acert_tim <- tribble(
+  ~"Aircraft_Group",	~"Takeoff",	~"Climb", ~	"Approach",	~ "Idle" 
+  ,"Jet",	              0.7,	      2.2,	      4,           NA 
+  ,"Bizjet",	          0.4,      	0.5,      	1.6,         NA
+  ,"Turbo", 	          0.5,	      2.5,	      4.5,         NA
+  ,"Piston",	          0.3,	       5,        	6,           NA
+  ,"Helicopter",	      0,          6.5,	      6.5,      	 7.0
+)
+flextable::flextable(acert_tim)
+``` 
+
+EI Jet-A1 for CO2 calculations in this sheet			kg CO2/kg Jet-A1	 3,150 	 3,150 	 3,150 	V5, 2017
+EI Agvas for CO2 calculations in this sheet			kg CO2/kg AVGAS	 3,253 	 3,253 	 --- 	V5, 2017
+
+Data References:				
+nnAAnnn = ICAO Engine Emission Database with ICAO UID				
+A(A)nnn = Zurich Airport Engine Database with data from the Swiss FOCA and from some manufacturers				
+FAEEDnnn: US FAA, AP-42 aircraft engine data base (1995)				
+
+
+```{r}
+library(readxl)
+acert <- readxl::read_excel("./data-raw/ACERT_6.0_ACI_Public_build2216.xlsx", sheet = "EF Aircraft", skip = 2) %>% 
+  mutate(ROW = row_number()) %>% 
+  filter(ROW < 147)
 ```
 
