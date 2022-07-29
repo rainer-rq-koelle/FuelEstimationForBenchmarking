@@ -10,6 +10,10 @@ author:
     orcid_id: 0000-0003-2810-1404
 citation_url: https://rstudio.github.io/distill
 bibliography: ANS_Perf_Book.bib
+output:
+  distill::distill_article:
+    toc: true
+    toc_depth: 2
 ---
 
 First stab at an article summarising this research.    
@@ -81,6 +85,18 @@ Despite the introduction of an initial market-based mechanism, immediate action 
 ICAO promotes a performance-based approach.
 The Global Air Navigation Plan (GANP) proposes indicators for regional benchmarking [@icao_doc9750_2019].
 However, there is no detailed guidance on how to measure *additional fuel burn*.
+
+Fuel burn per se is known to the aircraft operator. 
+While the actual fuel burn and fuel flow during the flight is recorded (e.g. flight data recorder), these data are not commonly shared.
+Acoordingly, a wide variety of models have been developed to estimate fuel burn (and associated emissions) for different applications.
+Applications range from global emission inventories to low-level analytics.
+The work within these application fields is regularly challenged by the fact that aircraft emission calculations require proprietary engine data which usually is difficult to obtain.
+
+This work builds on openly available engine emission data.
+The goal is to build simple estimation model applicable for performance benchmarking to keep calculation complexity reasonably low.
+The overall aim it to develop an approach suitable for regional operational performance comparisons.
+This apporach trades off complexity versus accuracy.
+Total emission estimates shall therefore be considered as rough point estimates.
 
 The contribution of this paper are as follows:
 

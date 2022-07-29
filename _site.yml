@@ -12,6 +12,8 @@ navbar:
       href: index.html
     - text: "Model"
       href: model.html
+    - text: "Data Prep"
+      href: dataprep.html
     - text: "Technical Note(s)"
       href: paper-01.html
     - text: "Resources"

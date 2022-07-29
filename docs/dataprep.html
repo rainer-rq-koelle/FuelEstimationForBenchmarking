@@ -88,29 +88,26 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Fuel Estimation For Operational Performance Benchmarking: About this site</title>
+  <title>Fuel Estimation For Operational Performance Benchmarking: Data Preparatory Steps</title>
 
-  <meta property="description" itemprop="description" content="Operational performance benchmarking - joint project DECEA/PRU"/>
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Fuel Estimation For Operational Performance Benchmarking: About this site"/>
+  <meta property="og:title" content="Fuel Estimation For Operational Performance Benchmarking: Data Preparatory Steps"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Operational performance benchmarking - joint project DECEA/PRU"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Fuel Estimation For Operational Performance Benchmarking"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Fuel Estimation For Operational Performance Benchmarking: About this site"/>
-  <meta property="twitter:description" content="Operational performance benchmarking - joint project DECEA/PRU"/>
+  <meta property="twitter:title" content="Fuel Estimation For Operational Performance Benchmarking: Data Preparatory Steps"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["About this site"]},{"type":"character","attributes":{},"value":["Operational performance benchmarking - joint project DECEA/PRU"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title"]}},"value":[{"type":"character","attributes":{},"value":["Data Preparatory Steps"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2068,6 +2065,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+  <link href="site_libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+  <link href="site_libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2087,7 +2086,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"About this site","description":"Operational performance benchmarking - joint project DECEA/PRU","authors":[]}
+{"title":"Data Preparatory Steps","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2113,19 +2112,109 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>About this site</h1>
+<h1>Data Preparatory Steps</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Operational performance benchmarking - joint project
-DECEA/PRU</p></p>
+
 </div>
 
 
 <div class="d-article">
-<p>This site / work origingated during the 2022 edition of the
-Operational Performance Comparision between Brazil and Europe.</p>
-<p>The work is a joint project by DECEA (Department of Airspace Control)
-and EUROCONTROL’s Performance Review Unit.</p>
+<p>This page documents the data preparatory action for constructing the
+look-up tables.<br />
+The code is presented for reproducibility.<br />
+The respective data files are stored in the subfolder
+<strong>./data-analytic/</strong>.</p>
+<h1 id="lto-and-ccd">LTO and CCD</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/include_graphics.html'>include_graphics</a></span><span class='op'>(</span><span class='st'>"./figures/LTO-CCD.png"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="figures/LTO-CCD.png" width="380" /></p>
+</div>
+<p>Standards for certification of emissions produced by aircraft engines
+are determined in Volume II of Annex 16 of the International Civil
+Aviation Organization. The Standard focuses on the measurement of carbon
+monoxide (CO), unburned hydrocarbons (HC), nitro- gen oxides (NOX), and
+smoke. Volume II of Annex 16 also sets a regulatory limit on the
+concentration of the mentioned emission products during the landing and
+takeoff cycle (LTO).</p>
+<p>The LTO cycle comprises the landing, taxiing, and take-off from/up to
+an altitude of 3000ft. According to the certification process, engines
+must be tested at various thrust settings representing the operations
+during the LTO cycle.</p>
+<p>The associated data point conventions are</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>thrust_mode_tbl</span> <span class='op'>&lt;-</span> </span>
+<span>  <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span><span class='op'>(</span></span>
+<span>    <span class='op'>~</span><span class='st'>"Operating Mode"</span>, <span class='op'>~</span><span class='st'>"Engine Thrust (%)"</span>, <span class='op'>~</span><span class='st'>"Operating Time (min)"</span></span>
+<span>    ,<span class='st'>"Taxi-out"</span>, <span class='fl'>7</span>, <span class='fl'>7.0</span></span>
+<span>    ,<span class='st'>"Take-off"</span>, <span class='fl'>100</span>, <span class='fl'>0.7</span></span>
+<span>    ,<span class='st'>"Climb-out"</span>, <span class='fl'>85</span>, <span class='fl'>2.2</span></span>
+<span>    ,<span class='st'>"Approach"</span>, <span class='fl'>30</span>, <span class='fl'>4.0</span></span>
+<span>    ,<span class='st'>"Taxi-in"</span>, <span class='fl'>7</span>, <span class='fl'>19</span></span>
+<span>  <span class='op'>)</span></span>
+<span><span class='va'>thrust_mode_tbl</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>flextable</span><span class='fu'>::</span><span class='fu'><a href='https://davidgohel.github.io/flextable/reference/flextable.html'>flextable</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<template id="4ccb93f2-6259-4c67-8b62-ae27ffe0ee7e"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style><div class="tabwid"><style>.cl-cb7e2916{}.cl-cb7b9a84{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-cb7ba4ac{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-cb7ba4ad{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-cb7bbeb0{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cb7bbeba{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cb7bbebb{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cb7bbebc{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cb7bbebd{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-cb7bbec4{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-cb7e2916'>
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-cb7bbec4"><p class="cl-cb7ba4ac"><span class="cl-cb7b9a84">Operating Mode</span></p></td><td class="cl-cb7bbebd"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">Engine Thrust (%)</span></p></td><td class="cl-cb7bbebd"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">Operating Time (min)</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-cb7bbeb0"><p class="cl-cb7ba4ac"><span class="cl-cb7b9a84">Taxi-out</span></p></td><td class="cl-cb7bbeba"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">7</span></p></td><td class="cl-cb7bbeba"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">7.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cb7bbeb0"><p class="cl-cb7ba4ac"><span class="cl-cb7b9a84">Take-off</span></p></td><td class="cl-cb7bbeba"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">100</span></p></td><td class="cl-cb7bbeba"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">0.7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cb7bbeb0"><p class="cl-cb7ba4ac"><span class="cl-cb7b9a84">Climb-out</span></p></td><td class="cl-cb7bbeba"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">85</span></p></td><td class="cl-cb7bbeba"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">2.2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cb7bbeb0"><p class="cl-cb7ba4ac"><span class="cl-cb7b9a84">Approach</span></p></td><td class="cl-cb7bbeba"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">30</span></p></td><td class="cl-cb7bbeba"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">4.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-cb7bbebc"><p class="cl-cb7ba4ac"><span class="cl-cb7b9a84">Taxi-in</span></p></td><td class="cl-cb7bbebb"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">7</span></p></td><td class="cl-cb7bbebb"><p class="cl-cb7ba4ad"><span class="cl-cb7b9a84">19.0</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="108b4035-883f-47b8-a7df-3eda41bc089e"></div>
+<script>
+var dest = document.getElementById("108b4035-883f-47b8-a7df-3eda41bc089e");
+var template = document.getElementById("4ccb93f2-6259-4c67-8b62-ae27ffe0ee7e");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+</div>
+<p>Dependent on the work estimates for the complete LTO cycle are based
+on the associated “standard” times in the operating mode. However, the
+table enables also to map actual observed movement times to the
+“standard” thrust setting (as established by ICAO) and derive associated
+fuel flow/burn estimates.</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

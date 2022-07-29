@@ -142,7 +142,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","date","author","citation_url","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["Fuel Burn Estimation for Operational Performance Benchmarking"]},{"type":"character","attributes":{},"value":["July 2022"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["first_name","last_name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Rainer"]},{"type":"character","attributes":{},"value":["Koelle"]},{"type":"character","attributes":{},"value":["EUROCONTROL, Performance Review Unit"]},{"type":"character","attributes":{},"value":["https://example.com/spacelysprokets"]},{"type":"character","attributes":{},"value":["0000-0003-2810-1404"]}]}]},{"type":"character","attributes":{},"value":["https://rstudio.github.io/distill"]},{"type":"character","attributes":{},"value":["ANS_Perf_Book.bib"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","date","author","citation_url","bibliography","output"]}},"value":[{"type":"character","attributes":{},"value":["Fuel Burn Estimation for Operational Performance Benchmarking"]},{"type":"character","attributes":{},"value":["July 2022"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["first_name","last_name","affiliation","affiliation_url","orcid_id"]}},"value":[{"type":"character","attributes":{},"value":["Rainer"]},{"type":"character","attributes":{},"value":["Koelle"]},{"type":"character","attributes":{},"value":["EUROCONTROL, Performance Review Unit"]},{"type":"character","attributes":{},"value":["https://example.com/spacelysprokets"]},{"type":"character","attributes":{},"value":["0000-0003-2810-1404"]}]}]},{"type":"character","attributes":{},"value":["https://rstudio.github.io/distill"]},{"type":"character","attributes":{},"value":["ANS_Perf_Book.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[2]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2132,6 +2132,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="nav-right">
 <a href="index.html">Home</a>
 <a href="model.html">Model</a>
+<a href="dataprep.html">Data Prep</a>
 <a href="paper-01.html">Technical Note(s)</a>
 <a href="resources.html">Resources</a>
 <a href="about.html">About</a>
@@ -2158,6 +2159,27 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#abstract">Abstract</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#background">Background</a>
+<ul>
+<li><a href="#icao-ganp-key-performance-indicators">ICAO GANP Key
+Performance Indicators</a></li>
+</ul></li>
+<li><a href="#conceptual-approach">Conceptual Approach</a></li>
+<li><a href="#method-and-materials">Method and Materials</a>
+<ul>
+<li><a href="#data">Data</a></li>
+</ul></li>
+<li><a href="#results-and-discussion">Results and Discussion</a></li>
+<li><a href="#conclusions">Conclusions</a></li>
+</ul>
+</nav>
+</div>
 <p>First stab at an article summarising this research.<br />
 This is <strong>work in progress</strong>. Please consult this page for
 updates in the future.</p>
@@ -2199,6 +2221,22 @@ class="citation" data-cites="icao_doc9750_2019">(<a
 href="#ref-icao_doc9750_2019" role="doc-biblioref">ICAO
 2019</a>)</span>. However, there is no detailed guidance on how to
 measure <em>additional fuel burn</em>.</p>
+<p>Fuel burn per se is known to the aircraft operator. While the actual
+fuel burn and fuel flow during the flight is recorded (e.g. flight data
+recorder), these data are not commonly shared. Acoordingly, a wide
+variety of models have been developed to estimate fuel burn (and
+associated emissions) for different applications. Applications range
+from global emission inventories to low-level analytics. The work within
+these application fields is regularly challenged by the fact that
+aircraft emission calculations require proprietary engine data which
+usually is difficult to obtain.</p>
+<p>This work builds on openly available engine emission data. The goal
+is to build simple estimation model applicable for performance
+benchmarking to keep calculation complexity reasonably low. The overall
+aim it to develop an approach suitable for regional operational
+performance comparisons. This apporach trades off complexity versus
+accuracy. Total emission estimates shall therefore be considered as
+rough point estimates.</p>
 <p>The contribution of this paper are as follows:</p>
 <ul>
 <li>development of supporting material to estimate fuel burn / CO2

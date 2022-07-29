@@ -31,9 +31,9 @@ Operational inefficiencies typically increase the aircraft flying time (i.e. air
 Engine time is directly linked to fuel burn and associated emissions and pollutants.
 In that respect, inefficiencies contribute to the ditremental effect of excessive emissions to climate change.
 
-Aircraft engines produce various types of emissions. These emissions include carbon dioxide $CO_2$, water vapour ${H_2}O$, nitrogen oxides
-nitrogen oxides (NOX), carbon monoxide (CO), unburned hydrocarbons (HC), sulfur oxides (SOX), particulatematter (PM), and other trace compounds. About 70 percent of aircraft emissions are CO2; followed by H2O atslightly less than 30% while the rest of the pollutant represent less than 1 percent each [source]. 
-CO2 and H2O formsignificant amount of GHG emissions that can trigger climate change while NOX, CO, HC, SOX and particulate matterare always associated with air quality and subsequently public health
+Aircraft engines produce various types of emissions. These emissions include carbon dioxide CO2, water vapour H2O, nitrogen oxides
+nitrogen oxides (NOX), carbon monoxide (CO), unburned hydrocarbons (HC), sulfur oxides (SOX), particulate matter (PM), and other trace compounds. About 70 percent of aircraft emissions are CO2; followed by H2O atslightly less than 30% while the rest of the pollutant represent less than 1 percent each [source]. 
+CO2 and H2O form significant amount of GHG emissions that can trigger climate change while NOX, CO, HC, SOX and particulate matter are always associated with air quality and subsequently public health
 
 Operational performance benchmarking aims at understanding the similarities and differences of operational practices/concepts, technological enablers, and strategic and operational priorities in different regions.
 The practice of operational performance benchmarking is well established through regular bi-regional (e.g. US/EU, BRA-EUR, CHN-EUR) or multi-regional (PWBG) comparison reports. 

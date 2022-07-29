@@ -1,0 +1,138 @@
+---
+title: "Untitled"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+date: '2022-07-26'
+---
+
+```{r setup, include=FALSE, echo=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+# set defaults
+theme_set(theme_minimal())
+```
+
+```{r, eval = FALSE}
+#openavem aircraft data
+ac_classes <- read_csv("data-raw/openavem-1.0/aircraft/ac_classes.csv")
+ac_icao_description <- read_csv("data-raw/openavem-1.0/aircraft/ac_icao_description.csv")
+oag_to_icao <- read_csv("data-raw/openavem-1.0/aircraft/oag_to_icao.csv")
+typecode_replacements <- read_csv("data-raw/openavem-1.0/aircraft/typecode_replacements.csv")
+
+ac_classes <- ac_classes %>% rename(TYPE = typecode, MODEL_CLASS = class)
+ac_icao_description <- ac_icao_description %>% rename(TYPE = Designator, DESC = Description)
+
+# engine stuff
+eng_allocations <- read_csv("data-raw/openavem-1.0/engines/eng_allocations.csv")
+eng_properties <- read_csv("data-raw/openavem-1.0/engines/eng_properties.csv")
+
+eng_allocations <- eng_allocations %>% rename(TYPE = typecode, ENG_ID = uid)
+eng_properties <- eng_properties %>% rename(ENG_ID = uid)
+
+
+type_engine_map <- ac_icao_description %>% 
+  left_join(ac_classes, by = "TYPE") %>% 
+  left_join(eng_allocations %>% select(-contains("apu")), by = "TYPE") %>% 
+  left_join(eng_properties, by = "ENG_ID")
+
+# package and save out look-up table
+rq <- type_engine_map %>% 
+  select(TYPE, DESC, MODEL_CLASS, ENG_ID
+         , FUEL_TO = fuel_to, FUEL_CO = fuel_co
+         , FUEL_APP = fuel_app, FUEL_IDLE = fuel_idle
+         , FUEL_LTO = Fuel_LTO_cycle
+         ) %>% 
+  filter(!is.na(ENG_ID)) %>% 
+  mutate( NBR_ENG = substr(DESC,2,2) %>% as.numeric() ) %>% 
+  select(TYPE, DESC, CLASS, NBR_ENG, everything()) 
+
+rq %>% write_csv("./data-analytic/type_engine_map.csv")
+```
+
+
+```{r}
+type_engine_map <- read_csv("./data-analytic/type_engine_map.csv")
+
+ds <- read_csv2(
+  "~/RProjects/__DATA/EDDF/EDDF_2019_FACT.csv"
+  ,trim_ws = TRUE
+  , col_types = cols_only(
+     AP_C_FLTID = col_character()
+    ,AP_C_REG   = col_character()
+    ,ADEP_ICAO  = col_character()
+    ,ADES_ICAO  = col_character()
+    ,MVT_TIME_UTC = col_character()
+    ,AP_C_STND = col_character()
+    ,AP_C_RWY  = col_character()
+    ,AP_C_ARCTYP = col_character()
+    ,AC_CLASS   = col_character()
+    ,BLOCK_TIME_UTC = col_character()
+    ,SRC_PHASE = col_character()
+    )
+  ) 
+# strip off useless var conventions
+names(ds) <- names(ds) %>% gsub(pattern = "(AP_C_)|(AC_)|(_UTC)", replacement = "",.)
+ds        <- ds %>% rename(TYPE = ARCTYP)
+
+ds <-  ds %>% mutate(MVT_TIME = lubridate::dmy_hms(MVT_TIME),BLOCK_TIME = lubridate::dmy_hms(BLOCK_TIME))
+```
+
+```{r}
+acs <- ds %>% 
+  group_by(TYPE) %>% 
+  summarise(N = n(), ARRS = sum(SRC_PHASE == "ARR", na.rm = TRUE), DEPS = sum(SRC_PHASE == "DEP", na.rm = TRUE)) %>% 
+  arrange(desc(N)) %>% 
+  mutate(SHARE = N / sum(N), SHARE = prettyNum(SHARE, scientific = FALSE, digits = 3))
+
+acs
+```
+
+```{r}
+acs %>% mutate(RANK = 1:nrow(acs)) %>% 
+  ggplot() +
+  geom_path(aes(x = RANK, y = cumsum(SHARE)))
+```
+
+```{r}
+types_not_covered <- acs %>% mutate(RANK = row_number(), CUM_SHARE = cumsum(SHARE), ENG = TYPE %in% type_engine_map$TYPE) %>% filter(ENG != TRUE)
+
+flextable::flextable(types_not_covered)
+```
+
+
+```{r}
+arrs <- ds %>% filter(SRC_PHASE == "ARR")
+deps <- ds %>% filter(SRC_PHASE == "DEP")
+```
+
+```{r}
+arr_refs <- arrs %>% 
+  select(STND, RWY, ALDT = MVT_TIME, AIBT = BLOCK_TIME) %>% 
+  mutate(TXIT = difftime(AIBT, ALDT, units = "min") %>% as.numeric) %>% 
+  group_by(STND, RWY) %>% 
+  summarise(N = n(), TXIT_REF = quantile(TXIT, probs = 0.2, na.rm = TRUE))
+arr_refs
+
+arrs_fuel <- arrs %>% 
+  select(TYPE, STND, RWY, ALDT = MVT_TIME, AIBT = BLOCK_TIME) %>% 
+  mutate(TXIT = difftime(AIBT, ALDT, units = "min") %>% as.numeric) %>%
+  left_join(arr_refs %>% select(STND, RWY, TXIT_REF), by = c("STND","RWY")) %>% 
+  left_join(type_engine_map %>% select(TYPE, NBR_ENG, ENG_ID, FUEL_IDLE), by = "TYPE") %>% 
+  mutate( TXIT_FUEL     = TXIT * NBR_ENG * FUEL_IDLE * 60
+         ,ADD_TXIT_FUEL = (TXIT - TXIT_REF) * NBR_ENG * FUEL_IDLE * 60)
+
+arrs_fuel %>% select(TYPE:TXIT_REF, TXIT_FUEL, ADD_TXIT_FUEL, everything())
+```
+
+```{r}
+arrs_fuel %>% mutate(DOF = lubridate::date(AIBT)) %>% select(DOF, TXIT_FUEL, ADD_TXIT_FUEL) %>% 
+  pivot_longer(cols = c("TXIT_FUEL", "ADD_TXIT_FUEL"), names_to = "COMPONENT", values_to = "FUEL") %>% 
+  #filter(lubridate::month(DOF) == 6) %>% 
+  
+  ggplot() +
+    geom_col(aes(x = DOF, y = FUEL, fill = COMPONENT), position = position_stack())
+```
+
