@@ -72,6 +72,20 @@ rq %>% write_csv("./data-analytic/type_engine_map.csv")
 ```{r}
 type_engine_map <- read_csv("./data-analytic/type_engine_map.csv")
 
+colspec <- cols_only(
+     AP_C_FLTID = col_character()
+    ,AP_C_REG   = col_character()
+    ,ADEP_ICAO  = col_character()
+    ,ADES_ICAO  = col_character()
+    ,MVT_TIME_UTC = col_character()
+    ,AP_C_STND = col_character()
+    ,AP_C_RWY  = col_character()
+    ,AP_C_ARCTYP = col_character()
+    ,AC_CLASS   = col_character()
+    ,BLOCK_TIME_UTC = col_character()
+    ,SRC_PHASE = col_character()
+    )
+
 ds <- read_csv2(
   "~/RProjects/__DATA/EDDF/EDDF_2019_FACT.csv"
   ,trim_ws = TRUE
@@ -187,5 +201,131 @@ library(readxl)
 acert <- readxl::read_excel("./data-raw/ACERT_6.0_ACI_Public_build2216.xlsx", sheet = "EF Aircraft", skip = 2) %>% 
   mutate(ROW = row_number()) %>% 
   filter(ROW < 147)
+```
+
+# Crunching Data for BRA-EUR
+
+load respective airport data
+
+```{r}
+apt <- "EHAM"
+
+read_FACT <- function(.apt, .yr, .colspec, ...){
+  fn <- paste0("../__DATA/", .apt, "/", .apt,"_", .yr, "_FACT.csv")
+  df <- readr::read_csv2(fn, trim_ws = TRUE, col_types = .colspec)
+  
+  df <- df %>% mutate(across(contains("TIME_UTC"), lubridate::dmy_hms))
+  names(df) <- names(df) %>% 
+    gsub(pattern = "(AP_C_)|(AC_)|(_UTC)", replacement = "",.)
+  df        <- df %>% rename(TYPE = ARCTYP)
+
+  
+  return(df)
+}
+
+read_multiyear_FACT <- function(.apt, .yrs, .colspec, ... ){
+  dfs <- .yrs %>% 
+    purrr::map_dfr(.f = ~ read_FACT(.apt, .x, .colspec))
+  return(dfs)
+}
+```
+
+```{r}
+ds2019 <- read_FACT(apt, 2019, colspec)
+ds2020 <- read_FACT(apt, 2020, colspec)
+ds2021 <- read_FACT(apt, 2021, colspec)
+
+ds <- bind_rows(ds2019, ds2020, ds2021) %>% 
+  distinct() %>% 
+  mutate(YEAR = lubridate::year(BLOCK_TIME)
+         ,TXXT = case_when(
+               SRC_PHASE == "DEP" ~ difftime(MVT_TIME, BLOCK_TIME, units = "min") %>% as.numeric
+              ,SRC_PHASE == "ARR" ~ difftime(BLOCK_TIME, MVT_TIME, units = "min") %>% as.numeric
+              #, TRUE ~ NA
+            )
+         ,ID = paste(SRC_PHASE, STND, RWY, sep = "-")
+         ,APT = apt
+         )
+refs_2019 <- ds %>%
+  filter(YEAR == 2019) %>% 
+  group_by(YEAR, ID, SRC_PHASE, STND, RWY) %>% 
+  summarise(N = n(), VALID = sum(!is.na(TXXT)), REF_20 = quantile(TXXT, probs = 0.2, na.rm = TRUE), .groups = "drop") %>% 
+  mutate(OBSERVED = "2019") %>% 
+  filter(N >= 30)
+
+refs_2020 <- ds %>% 
+  filter(YEAR <= 2020) %>% 
+  filter(!ID %in% refs_2019$ID) %>% 
+  group_by(ID, SRC_PHASE, STND, RWY) %>% 
+  summarise(N = n(), VALID = sum(!is.na(TXXT)), REF_20 = quantile(TXXT, probs = 0.2, na.rm = TRUE), .groups = "drop") %>% 
+  mutate(OBSERVED = "2020, 2019") %>% 
+  filter(N >= 30)
+
+refs_2021 <- ds %>% 
+  filter(YEAR <= 2021) %>% 
+  filter(!ID %in% refs_2019$ID) %>% filter(!ID %in% refs_2020$ID) %>%  
+  group_by(ID, SRC_PHASE, STND, RWY) %>% 
+  summarise(N = n(), VALID = sum(!is.na(TXXT)), REF_20 = quantile(TXXT, probs = 0.2, na.rm = TRUE), .groups = "drop") %>% 
+  mutate(OBSERVED = "2021, 2020, 2019") %>% 
+  filter(N >= 20)
+
+refs <- bind_rows(refs_2019, refs_2020, refs_2021) %>% drop_na() %>% mutate(ICAO = apt) %>% 
+  select(ICAO, PHASE = SRC_PHASE, STND, RWY, N, VALID, REF_20, ID, OBSERVED)
+
+write_csv(refs, file = paste0("./data-analytic/", apt,"_TXXT_REF.csv"))
+```
+
+do the analysis
+
+```{r}
+apt <- "EDDF"
+yrs <- c(2019,2020,2021)
+
+ds   <- read_multiyear_FACT(apt, yrs, colspec) %>% 
+  mutate(DOF = lubridate::date(BLOCK_TIME), YEAR = lubridate::year(BLOCK_TIME)
+         ,ID = paste(SRC_PHASE, STND, RWY, sep = "-" )
+         ,TXXT = case_when(
+               SRC_PHASE == "DEP" ~ difftime(MVT_TIME, BLOCK_TIME, units = "min") %>% as.numeric
+              ,SRC_PHASE == "ARR" ~ difftime(BLOCK_TIME, MVT_TIME, units = "min") %>% as.numeric
+            )
+         )
+refs <- read_csv(paste0("./data-analytic/", apt, "_TXXT_REF.csv"))
+
+rq <- ds  %>% 
+  left_join(refs %>% select(ID, REF_20), by = "ID") %>% 
+  left_join(type_engine_map %>% select(TYPE, NBR_ENG, FUEL_TO, FUEL_IDLE), by = "TYPE") %>% 
+  mutate( ADD_TXXT = TXXT - REF_20
+         ,ADD_FUEL = ADD_TXXT * NBR_ENG * FUEL_TO * 60)
+
+write_csv(rq, file = paste0("./data-analytic/", apt, "_TXXT_FUEL.csv.gz"))
+```
+
+```{r}
+taxi_fuel <- rq %>% 
+  group_by(DOF, SRC_PHASE) %>% 
+  summarise(  N = n()
+            , VALID_TXXT = sum(!is.na(TXXT))
+            , VALID_FUEL = sum(!is.na(ADD_FUEL))
+            , TOT_TXXT = sum(TXXT, na.rm = TRUE)
+            , TOT_REF = sum(REF_20, na.rm = TRUE)
+            , TOT_ADD_TIME = sum(ADD_TXXT, na.rm = TRUE)
+            ,TOT_ADD_FUEL = sum(ADD_FUEL, na.rm = TRUE)
+            )
+```
+
+fuel should be corrected for missing flights
+
+```{r}
+taxi_fuel %>% 
+ggplot() + 
+  geom_path(aes(x = DOF, y = N - VALID_FUEL, group = SRC_PHASE)) +
+  facet_wrap(.~SRC_PHASE, nrow = 2) +
+  labs(title = "coverage of fleet for fuel burn estimation", y = "unknown ac types for fuel", x = NULL)
+```
+
+```{r}
+taxi_fuel %>% 
+  ggplot() +
+  geom_path(aes(x = DOF, y = TOT_ADD_FUEL, colour = SRC_PHASE))
 ```
 

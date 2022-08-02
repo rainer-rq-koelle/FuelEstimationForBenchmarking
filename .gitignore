@@ -6,5 +6,5 @@ _BRA-EUR-FuelEstimation-PaperPBWG.log
 _BRA-EUR-FuelEstimation-PaperPBWG.tex
 data-raw
 .DS_Store
-
 docs/_taxifuel.*
+_*.Rmd
