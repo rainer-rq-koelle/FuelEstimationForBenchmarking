@@ -22,6 +22,7 @@ the basis for performance based modelling (Table 2).
 ```{r setup, include=FALSE, echo=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(patchwork)
 
 # set defaults
 theme_set(theme_minimal())
@@ -295,9 +296,10 @@ rq <- ds  %>%
   left_join(refs %>% select(ID, REF_20), by = "ID") %>% 
   left_join(type_engine_map %>% select(TYPE, NBR_ENG, FUEL_TO, FUEL_IDLE), by = "TYPE") %>% 
   mutate( ADD_TXXT = TXXT - REF_20
-         ,ADD_FUEL = ADD_TXXT * NBR_ENG * FUEL_TO * 60)
+         ,ADD_FUEL = ADD_TXXT * NBR_ENG * FUEL_IDLE * 60)
 
-write_csv(rq, file = paste0("./data-analytic/", apt, "_TXXT_FUEL.csv.gz"))
+#write_csv(rq, file = paste0("./data-analytic/", apt, "_TXXT_FUEL.csv.gz"))
+rq <- read_csv(paste0("./data-analytic/", apt, "_TXXT_FUEL.csv.gz"))
 ```
 
 ```{r}
@@ -324,8 +326,72 @@ ggplot() +
 ```
 
 ```{r}
-taxi_fuel %>% 
+p1 <- taxi_fuel %>% group_by(DOF) %>% 
+  summarise(MVTS = sum(N, na.rm = TRUE)) %>% 
+  ggplot() + 
+    geom_line(aes(x = DOF, y = MVTS)) +
+    labs(x = NULL, y = "movements")
+
+p2 <- taxi_fuel %>% 
   ggplot() +
-  geom_path(aes(x = DOF, y = TOT_ADD_FUEL, colour = SRC_PHASE))
+  geom_path(aes(x = DOF, y = TOT_ADD_FUEL, colour = SRC_PHASE)) +
+  scale_y_continuous(labels = scales::label_number(suffix = " k", scale = 1e-3)) +
+  labs(x = NULL, y = "total additional fuel burn (kt)"
+       ,colour = NULL) +
+  theme(legend.position = c(0.8, 0.8))
+
+p3 <- taxi_fuel %>% 
+  ggplot() +
+  geom_col(aes(x = DOF, y = TOT_ADD_FUEL, colour = SRC_PHASE)) +
+  scale_y_continuous(labels = scales::label_number(suffix = " k", scale = 1e-3)) +
+  labs(x = NULL, y = "total additional fuel burn (kt)"
+       ,colour = NULL) +
+  theme(legend.position = c(0.8, 0.8))
+
+p1 / p2 + 
+  plot_layout(heights = c(1,4)) +
+  plot_annotation(title = "EDDF - daily movements and additional fuel burn")
+```
+
+
+```{r}
+tmp <- taxi_fuel %>% 
+  group_by(DOF) %>% 
+  summarise(TOT_ADD_FUEL = sum(TOT_ADD_FUEL)) %>% 
+  mutate(CUM_TOT_ADD_FUEL = cumsum(TOT_ADD_FUEL))
+
+tmp_max_year <- tmp %>%
+  group_by(YEAR = lubridate::year(DOF)) %>% 
+  summarise(MAX = max(CUM_TOT_ADD_FUEL)) %>% 
+  mutate(NEXT_YEAR = YEAR + 1) %>% 
+  bind_rows(tibble(YEAR = 2018, MAX = 0, NEXT_YEAR = 2019))
+
+tmp <- tmp %>% mutate(YEAR = lubridate::year(DOF)) %>% 
+  left_join(tmp_max_year %>% select(-YEAR) %>% rename(YEAR = NEXT_YEAR)
+            , by = "YEAR") %>% 
+  mutate( DOY = lubridate::yday(DOF)
+         ,ANNUAL_ADD_FUEL = CUM_TOT_ADD_FUEL - MAX)
+  
+tmp %>% 
+  ggplot() + 
+    geom_line(aes(x = DOF, y = CUM_TOT_ADD_FUEL)) +
+    scale_y_continuous(labels = scales::label_number(suffix = " M", scale = 1e-6)) +
+    labs(x = NULL, y = "additional taxi fuel burn (Mt)", title = "cummulative additional fuel burn since 1. Jan 2019")
+```
+
+```{r}
+tmp %>% mutate(FAKE_DOF = lubridate::`year<-`(DOF,2000)) %>% 
+
+  ggplot() + 
+    geom_line(aes(x = FAKE_DOF, y = ANNUAL_ADD_FUEL, group = YEAR, colour = as.factor(YEAR))) +
+    scale_x_date(breaks = "1 month", date_labels = "%b") +
+    scale_y_continuous(labels = scales::label_number(suffix = " M", scale = 1e-6)) +
+    labs(x = NULL, y = "cumulative annual additional fuel"
+         , colour = NULL) +
+    theme(legend.position = c(0.1, 0.8))
+```
+
+```{r}
+
 ```
 

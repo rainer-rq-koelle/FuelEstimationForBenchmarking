@@ -1,56 +1,152 @@
 ---
 title: "Model"
 bibliography: ANS_Perf_Book.bib
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
-To measure operational inefficiencies, the ICAO GANP proposes a set of indicators:
+To measure operational inefficiencies, the ICAO GANP proposes a set of
+indicators:
 
-* surface movement phase: additional taxi-in and taxi-out time
-* approach phase: additional time in terminal airspace
+-   surface movement phase: additional taxi-in and taxi-out time
+-   approach phase: additional time in terminal airspace
 
-These indicators compare the observed (actual) movement duration, e.g. from off-block to take-off, with an associated reference time.
-Reference times are calculated for flights with similar characteristics. 
-From each sub-population the 20th percentile of the observed movement durations is calculated as the reference time.
+These indicators compare the observed (actual) movement duration, e.g.
+from off-block to take-off, with an associated reference time. Reference
+times are calculated for flights with similar characteristics. From each
+sub-population the 20th percentile of the observed movement durations is
+calculated as the reference time.
 
 Note: provide details to the algorithms.
 
-From an environmental perspective, fuel burn is directly linked to engine time.
-Accordingly, inefficiencies, i.e. additional times, represent excessive engine time (and associated fuel burn).
-Green-house gas emissions are a product of fuel burn. 
-Thus estimating the fuel burn per flight phase or measured inefficiency allows to quantify the environmental impact.
+From an environmental perspective, fuel burn is directly linked to
+engine time. Accordingly, inefficiencies, i.e. additional times,
+represent excessive engine time (and associated fuel burn). Green-house
+gas emissions are a product of fuel burn. Thus estimating the fuel burn
+per flight phase or measured inefficiency allows to quantify the
+environmental impact.
 
-Fuel burn estimation requires a mapping of engine and airframe.
-This mapping is further complicated by the fact that various aircraft of the same family may be fitted with different engines. 
-Accordingly, this work is not - yet - aiming to establish a "perfect"  aircraft/engine mapping.
-The associated mapping is based on representative engines (and based on open data / resources).
+Fuel burn estimation requires a mapping of engine and airframe. This
+mapping is further complicated by the fact that various aircraft of the
+same family may be fitted with different engines. Accordingly, this work
+is not - yet - aiming to establish a "perfect" aircraft/engine mapping.
+The associated mapping is based on representative engines (and based on
+open data / resources).
+
+# Fuel Estimation
+
+taxi at uniform thrust setting / velocity - associated fuel consumption
+of aircraft $F_i$ is as follows: $F_i = T_i × f_i × N_i$ Ti is the
+taxiing time of aircraft i, fi is the fuel flow of one aircraft i, and
+Ni is the number of engines in aircraft i
+
+The calculation formula of pollutant k is as follows:
+$E_{ik} = T_i × f_i × N_i × EI_{ik}$ where Eik is the emissions of
+pollutant k of aircraft i during surface taxiing and EIik is the
+emission index of pollutant k from one engine of aircraft i.
+
+The following builds on the formulation of Zhang et al., 2019
+[@zhangAssessmentMethodFuel2019a].
+
+(1) Full-engine taxiing. Full-engine taxiing means that the main engines
+    of aircraft are initiated and work at a uniform velocity during
+    surface taxiing. This taxiing mode is the most commonly used at
+    present. Fuel consumption (F E i ) of any aircraft i under full
+    taxiing can be expressed on the basis of differences in engine fuel
+    flows under different taxiing states: F E i = X j T E ij × Ni × fij
+    × α,
+
+where j represents the engine states, namely, idling, uniform velocity,
+breakaway, and turning; T E ij is the taxiing time of aircraft i under
+full-engine taxiing when the engine is at state j; Ni refers to the
+number of engines in aircraft i; fij is the fuel flow of aircraft i when
+the engine is at state j; and α refers to the influencing coefficient of
+low-visibility weather on taxiing time. Pollutant gas emissions of
+aircrafts are related to fuel consumption and states of the dynamic
+device. The emissions of pollutant k (E E ik) of aircraft i under
+full-engine taxiing can be expressed as follows: E E ik = X j T E ij ×
+Ni × fij × α × EIijk, (9) where EIijk is the emission index of pollutant
+k of the aircraft i when the engine is at state j. (2) Single-engine
+taxiing. If frictional force and airport surface slope are allowed, then
+the aircraft can reserve one engine during taxiing. Under single-engine
+taxiing, the engine can only consume fuel and produce pollutants during
+its operation. If single-engine taxiing is adopted, then the main
+engine, which is closed, must be preheated before entering into the
+runway. The main engine can provide take-off power to the aircraft only
+after preheating. The engine start-up time (ESUT) is related to the
+aircraft mode, engine mode, and closed time of the engines. The duration
+is generally 2--5 min. Under taxiing, the aircraft needs time to cool
+the engines, which are closed during taxiing, after it lands. The engine
+cool-down time is similar to ESUT. The fuel consumption (F s i ) of any
+aircraft i under single taxiing can be expressed as follows: F s i = X j
+T s ij × Ni 2 × fij × α + Ni 2 × f 0 i × min T s i × α, 5 , (10) where
+T s ij is the taxiing time of aircraft i under single-engine taxiing
+when the engine is at state j; Ni 2 indicates aircraft taxiing when only
+half of the engines are started to produce thrust; fij is the fuel flow
+of aircraft i when the engine is at state j; f 0 i is the fuel flow
+under idling when preheating or cooling of engines is not needed during
+taxiing; min T s i × α, 5 indicates that if the taxiing time of the
+aircraft is longer than 5 min, then the preheating or cooling time of
+engines is set to 5 min. If the taxiing time is less than 5 min, then
+the preheating or cooling time of engines is used as the taxiing time.
+Under single-engine taxiing, emissions of pollutant k (E s ik) can be
+expressed as follows: E s ik = X j T s ij × Ni 2 × fij × α × EIijk + Ni
+2 × f 0 i × min T s i × α, 5 × EIik, (11) where EIijk is the emission
+index of pollutant k of aircraft i when the engine is at state j and
+EIik is the emission index of pollutant k when the engine is at idling
+state. (3) External AGPS External AGPS is a taxiing mode driven by a
+motor tractor while the main engine of the aircraft is unused. When the
+tractor drags the aircraft to initiate surface taxiing, engines remain
+at the idling state and are only started 5 min before take-off. Later,
+the aircraft accomplishes taxiing in the last taxiway section, and the
+tractor automatically returns. The traction taxiing velocity of the
+aircraft is far smaller than that driven by engines. The tractor can be
+divided into diesel- and electric-driven types [36]. The latter is more
+economical and environmentally friendly than the former. However,
+comparing the electricity with fuel consumption under other taxiing
+modes is difficult. Therefore, the diesel-driven tractor was applied as
+an external AGPS in the present study. The fuel consumption (F t i ) of
+any aircraft i during external AGPS in an airport can be expressed as
+follows: F t i = Ti × BHP × LF × f t ij × α + Ni × f 0 i × min(Ti × α,
+5) (12) where Ti is the surface taxiing time of aircraft i under
+external AGPS. Brake horsepower (BHP) refers to the average rated BHP of
+an engine equipment type
 
 # Benchmarking and Fuel Estimation in Arrival Phase
 
-* use ICAO Carbon Emission Calculator "data"
-  + aerodrome pair estimation based on web-interface
-  + stage length based scaling
-* determine "average" fuel burn for "average" flight during last 100NM, and associate this fuel burn with the reference time
-* calculate 
-  + total fuel burn during arrival phase
-  + excessive fuel burn for additional time in terminal airspace
-  
+-   use ICAO Carbon Emission Calculator "data"
+    -   aerodrome pair estimation based on web-interface
+    -   stage length based scaling
+-   determine "average" fuel burn for "average" flight during last
+    100NM, and associate this fuel burn with the reference time
+-   calculate
+    -   total fuel burn during arrival phase
+    -   excessive fuel burn for additional time in terminal airspace
+
 # Benchmarking and Fuel Estimation in Taxi-in and Taxi-Out Phase
 
->introduce LTO and modelling assumptions --> "aircraft engine exhaust emissions ... (Masiol and Harrison)". 
+> introduce LTO and modelling assumptions --\> "aircraft engine exhaust
+> emissions ... (Masiol and Harrison)".
 
-ICAO defined a default LTO cycle consisting of distinct phases: takeoff, climb, approach, and taxi/ground idle.
-These phases are characterised with specified thrust levels and times-in-mode.
+ICAO defined a default LTO cycle consisting of distinct phases: takeoff,
+climb, approach, and taxi/ground idle. These phases are characterised
+with specified thrust levels and times-in-mode.
 
-For our study we developed a lookup table for aircraft/representative engines and linked this to the ICAO Engine Databank (@icao_engine_databank).
+For our study we developed a lookup table for aircraft/representative
+engines and linked this to the ICAO Engine Databank
+(@icao_engine_databank).
 
-For taxi-in, we only apply the assumed 7% thrust setting of the Engine Databank.
-Note: this does not take into account reverse thrust operations to decelerate the aircraft during its landing roll.
+For taxi-in, we only apply the assumed 7% thrust setting of the Engine
+Databank. Note: this does not take into account reverse thrust
+operations to decelerate the aircraft during its landing roll.
 
-For operational performance benchmarking the taxi-out measure is determined by deriving the taxi time as the difference between the actual off-block time (AOBT) and the actual take-off time (ATOT).
-This includes the take-off roll.
-The ICAO LTO time-in-mode assume a 0.7min (=42 sec) take-off roll. 
-From an operational perspective this is a reasonable assumption for the majority of commercial aircraft. 
+For operational performance benchmarking the taxi-out measure is
+determined by deriving the taxi time as the difference between the
+actual off-block time (AOBT) and the actual take-off time (ATOT). This
+includes the take-off roll. The ICAO LTO time-in-mode assume a 0.7min
+(=42 sec) take-off roll. From an operational perspective this is a
+reasonable assumption for the majority of commercial aircraft.
 
-Note: The take-off roll assumption needs to be adapted for piston and private aircraft operations (e.g. C172).
-
-
+Note: The take-off roll assumption needs to be adapted for piston and
+private aircraft operations (e.g. C172).
