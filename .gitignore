@@ -7,4 +7,15 @@ _BRA-EUR-FuelEstimation-PaperPBWG.tex
 data-raw
 .DS_Store
 docs/_taxifuel.*
+docs/data-analytic/EDDF_TXXT_REF.csv
+docs/data-analytic/EDDM_TXXT_REF.csv
+docs/data-analytic/EGLL_TXXT_REF.csv
+docs/data-analytic/EGKK_TXXT_REF.csv
+docs/data-analytic/EHAM_TXXT_REF.csv
+docs/data-analytic/LEBL_TXXT_REF.csv
+docs/data-analytic/LEMD_TXXT_REF.csv
+docs/data-analytic/LFPG_TXXT_REF.csv
+docs/data-analytic/LIRF_TXXT_REF.csv
+docs/data-analytic/LSZH_TXXT_REF.csv
+#docs/data-analytic/EDDF_TXXT_REF.csv
 _*.Rmd

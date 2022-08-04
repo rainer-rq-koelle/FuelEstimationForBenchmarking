@@ -130,7 +130,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["Model"]},{"type":"character","attributes":{},"value":["ANS_Perf_Book.bib"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","bibliography","editor_options"]}},"value":[{"type":"character","attributes":{},"value":["Model"]},{"type":"character","attributes":{},"value":["ANS_Perf_Book.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["markdown"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["wrap"]}},"value":[{"type":"integer","attributes":{},"value":[72]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2148,7 +2148,7 @@ of indicators:</p>
 <li>approach phase: additional time in terminal airspace</li>
 </ul>
 <p>These indicators compare the observed (actual) movement duration,
-e.g. from off-block to take-off, with an associated reference time.
+e.g. from off-block to take-off, with an associated reference time.
 Reference times are calculated for flights with similar characteristics.
 From each sub-population the 20th percentile of the observed movement
 durations is calculated as the reference time.</p>
@@ -2165,6 +2165,85 @@ same family may be fitted with different engines. Accordingly, this work
 is not - yet - aiming to establish a “perfect” aircraft/engine mapping.
 The associated mapping is based on representative engines (and based on
 open data / resources).</p>
+<h1 id="fuel-estimation">Fuel Estimation</h1>
+<p>taxi at uniform thrust setting / velocity - associated fuel
+consumption of aircraft <span class="math inline">\(F_i\)</span> is as
+follows: <span class="math inline">\(F_i = T_i × f_i × N_i\)</span> Ti
+is the taxiing time of aircraft i, fi is the fuel flow of one aircraft
+i, and Ni is the number of engines in aircraft i</p>
+<p>The calculation formula of pollutant k is as follows: <span
+class="math inline">\(E_{ik} = T_i × f_i × N_i × EI_{ik}\)</span> where
+Eik is the emissions of pollutant k of aircraft i during surface taxiing
+and EIik is the emission index of pollutant k from one engine of
+aircraft i.</p>
+<p>The following builds on the formulation of Zhang et al., 2019 <span
+class="citation" data-cites="zhangAssessmentMethodFuel2019a">(<a
+href="#ref-zhangAssessmentMethodFuel2019a"
+role="doc-biblioref"><strong>zhangAssessmentMethodFuel2019a?</strong></a>)</span>.</p>
+<ol type="1">
+<li>Full-engine taxiing. Full-engine taxiing means that the main engines
+of aircraft are initiated and work at a uniform velocity during surface
+taxiing. This taxiing mode is the most commonly used at present. Fuel
+consumption (F E i ) of any aircraft i under full taxiing can be
+expressed on the basis of differences in engine fuel flows under
+different taxiing states: F E i = X j T E ij × Ni × fij × α,</li>
+</ol>
+<p>where j represents the engine states, namely, idling, uniform
+velocity, breakaway, and turning; T E ij is the taxiing time of aircraft
+i under full-engine taxiing when the engine is at state j; Ni refers to
+the number of engines in aircraft i; fij is the fuel flow of aircraft i
+when the engine is at state j; and α refers to the influencing
+coefficient of low-visibility weather on taxiing time. Pollutant gas
+emissions of aircrafts are related to fuel consumption and states of the
+dynamic device. The emissions of pollutant k (E E ik) of aircraft i
+under full-engine taxiing can be expressed as follows: E E ik = X j T E
+ij × Ni × fij × α × EIijk, (9) where EIijk is the emission index of
+pollutant k of the aircraft i when the engine is at state j. (2)
+Single-engine taxiing. If frictional force and airport surface slope are
+allowed, then the aircraft can reserve one engine during taxiing. Under
+single-engine taxiing, the engine can only consume fuel and produce
+pollutants during its operation. If single-engine taxiing is adopted,
+then the main engine, which is closed, must be preheated before entering
+into the runway. The main engine can provide take-off power to the
+aircraft only after preheating. The engine start-up time (ESUT) is
+related to the aircraft mode, engine mode, and closed time of the
+engines. The duration is generally 2–5 min. Under taxiing, the aircraft
+needs time to cool the engines, which are closed during taxiing, after
+it lands. The engine cool-down time is similar to ESUT. The fuel
+consumption (F s i ) of any aircraft i under single taxiing can be
+expressed as follows: F s i = X j T s ij × Ni 2 × fij × α + Ni 2 × f 0 i
+× min T s i × α, 5 , (10) where T s ij is the taxiing time of aircraft
+i under single-engine taxiing when the engine is at state j; Ni 2
+indicates aircraft taxiing when only half of the engines are started to
+produce thrust; fij is the fuel flow of aircraft i when the engine is at
+state j; f 0 i is the fuel flow under idling when preheating or cooling
+of engines is not needed during taxiing; min T s i × α, 5 indicates
+that if the taxiing time of the aircraft is longer than 5 min, then the
+preheating or cooling time of engines is set to 5 min. If the taxiing
+time is less than 5 min, then the preheating or cooling time of engines
+is used as the taxiing time. Under single-engine taxiing, emissions of
+pollutant k (E s ik) can be expressed as follows: E s ik = X j T s ij ×
+Ni 2 × fij × α × EIijk + Ni 2 × f 0 i × min T s i × α, 5 × EIik, (11)
+where EIijk is the emission index of pollutant k of aircraft i when the
+engine is at state j and EIik is the emission index of pollutant k when
+the engine is at idling state. (3) External AGPS External AGPS is a
+taxiing mode driven by a motor tractor while the main engine of the
+aircraft is unused. When the tractor drags the aircraft to initiate
+surface taxiing, engines remain at the idling state and are only started
+5 min before take-off. Later, the aircraft accomplishes taxiing in the
+last taxiway section, and the tractor automatically returns. The
+traction taxiing velocity of the aircraft is far smaller than that
+driven by engines. The tractor can be divided into diesel- and
+electric-driven types [36]. The latter is more economical and
+environmentally friendly than the former. However, comparing the
+electricity with fuel consumption under other taxiing modes is
+difficult. Therefore, the diesel-driven tractor was applied as an
+external AGPS in the present study. The fuel consumption (F t i ) of any
+aircraft i during external AGPS in an airport can be expressed as
+follows: F t i = Ti × BHP × LF × f t ij × α + Ni × f 0 i × min(Ti × α,
+5) (12) where Ti is the surface taxiing time of aircraft i under
+external AGPS. Brake horsepower (BHP) refers to the average rated BHP of
+an engine equipment type</p>
 <h1 id="benchmarking-and-fuel-estimation-in-arrival-phase">Benchmarking
 and Fuel Estimation in Arrival Phase</h1>
 <ul>
@@ -2223,6 +2302,15 @@ ICAO. n.d. <span>“<span>ICAO Engine Emissions Databank</span>.”</span>
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
