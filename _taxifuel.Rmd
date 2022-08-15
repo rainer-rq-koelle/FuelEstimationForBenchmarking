@@ -229,6 +229,23 @@ read_multiyear_FACT <- function(.apt, .yrs, .colspec, ... ){
     purrr::map_dfr(.f = ~ read_FACT(.apt, .x, .colspec))
   return(dfs)
 }
+
+# calculate REF20 and PBWG
+calc_ref_txxt <- function(.df, .min_stnd_rwy = 30, .comment = "no specifics"){
+    myrefs <- .df %>% 
+        group_by(YEAR, ID, SRC_PHASE, STND, RWY)
+    
+    ref20 <- myrefs %>% 
+        summarise(N = n(), VALID = sum(!is.na(TXXT)), REF_20 = quantile(TXXT, probs = 0.2, na.rm = TRUE), .groups = "drop")
+    
+    pbwg <- myrefs %>%
+        filter(TXXT >= quantile(TXXT, probs = 0.05, na.rm = TRUE) & TXXT <= quantile(TXXT, probs = 0.15, na.rm = TRUE)) %>% 
+        summarise(N_PBWG = n(), REF_PBWG = mean(TXXT), .groups = "drop")
+    
+    ref_comb <- left_join(ref20, pbwg, by = c("YEAR", "ID", "SRC_PHASE", "STND", "RWY")) %>% 
+        mutate(OBSERVED = .comment) %>% 
+        filter(VALID >= .min_stnd_rwy)
+}
 ```
 
 ```{r}
@@ -283,6 +300,7 @@ apt <- "EDDF"
 yrs <- c(2019,2020,2021)
 
 ds   <- read_multiyear_FACT(apt, yrs, colspec) %>% 
+  filter(CLASS != "HEL") %>% 
   mutate(DOF = lubridate::date(BLOCK_TIME), YEAR = lubridate::year(BLOCK_TIME)
          ,ID = paste(SRC_PHASE, STND, RWY, sep = "-" )
          ,TXXT = case_when(
@@ -292,11 +310,37 @@ ds   <- read_multiyear_FACT(apt, yrs, colspec) %>%
          )
 refs <- read_csv(paste0("./data-analytic/", apt, "_TXXT_REF.csv"))
 
-rq <- ds  %>% 
+ds_fuel <- ds  %>% 
   left_join(refs %>% select(ID, REF_20), by = "ID") %>% 
   left_join(type_engine_map %>% select(TYPE, NBR_ENG, FUEL_TO, FUEL_IDLE), by = "TYPE") %>% 
-  mutate( ADD_TXXT = TXXT - REF_20
-         ,ADD_FUEL = ADD_TXXT * NBR_ENG * FUEL_IDLE * 60)
+  mutate(FUEL_MAP = if_else(!is.na(FUEL_IDLE), TRUE, FALSE)
+         ,ADD_TXXT = TXXT - REF_20)
+
+avg_fuel <- ds_fuel %>% 
+  filter(!is.na(TXXT)) %>% 
+  group_by(SRC_PHASE, CLASS) %>% 
+  summarise( TXXT      = mean(TXXT, na.rm = TRUE)
+            , ADD_TXXT = mean(ADD_TXXT, na.rm = TRUE)
+            , NBR_ENG  = mean(NBR_ENG, na.rm = TRUE)
+            , FUEL_IDLE= mean(FUEL_IDLE, na.rm = TRUE)
+            , FUEL_TO  = mean(FUEL_TO, na.rm = TRUE)
+            , .groups = "drop")
+
+# join to replace NAs == fill missing == rows_patch()
+ds_fuel <- ds_fuel %>% 
+  rows_patch(avg_fuel, by = c("SRC_PHASE", "CLASS"))
+```
+
+ok        <- ds_fuel %>% filter(FUEL_MAP == TRUE & !is.na(ADD_TXXT))
+ok_no_tx  <- ds_fuel %>% filter(FUEL_MAP == TRUE &  is.na(ADD_TXXT)) %>% 
+  rows_update(avg_fuel %>% select(SRC_PHASE, CLASS, ADD_TXXT), by = c("CLASS", "SRC_PHASE"))
+
+nok_tx   <- ds_fuel %>% filter(FUEL_MAP == FALSE) %>% 
+  rows_patch(avg_fuel %>% select(SRC_PHASE, CLASS, NBR_ENG = AVG_ENG, FUEL_TO = AVG_F_TO, FUEL_IDLE = AVG_F_IDLE, ADD_TXXT), by = c("CLASS", "SRC_PHASE"))
+``` 
+
+#  mutate( ADD_TXXT = TXXT - REF_20
+#         ,ADD_FUEL = ADD_TXXT * NBR_ENG * FUEL_IDLE * 60)
 
 #write_csv(rq, file = paste0("./data-analytic/", apt, "_TXXT_FUEL.csv.gz"))
 rq <- read_csv(paste0("./data-analytic/", apt, "_TXXT_FUEL.csv.gz"))
