@@ -273,7 +273,7 @@ refs_2021 <- ds %>%
 refs <- bind_rows(refs_2019, refs_2020, refs_2021) %>% drop_na() %>% mutate(ICAO = apt) %>% 
   select(ICAO, PHASE = SRC_PHASE, STND, RWY, N, VALID, REF_20, ID, OBSERVED)
 
-write_csv(refs, file = paste0("./data-analytic/", apt,"_TXXT_REF.csv"))
+# write_csv(refs, file = paste0("./data-analytic/", apt,"_TXXT_REF.csv"))
 ```
 
 do the analysis

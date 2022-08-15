@@ -6,6 +6,7 @@ _BRA-EUR-FuelEstimation-PaperPBWG.log
 _BRA-EUR-FuelEstimation-PaperPBWG.tex
 data-raw
 .DS_Store
+.DS_Store?
 docs/_taxifuel.*
 docs/data-analytic/EDDF_TXXT_REF.csv
 docs/data-analytic/EDDM_TXXT_REF.csv
