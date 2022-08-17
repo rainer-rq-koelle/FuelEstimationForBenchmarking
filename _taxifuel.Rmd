@@ -319,16 +319,19 @@ ds_fuel <- ds  %>%
 avg_fuel <- ds_fuel %>% 
   filter(!is.na(TXXT)) %>% 
   group_by(SRC_PHASE, CLASS) %>% 
-  summarise( TXXT      = mean(TXXT, na.rm = TRUE)
+  summarise(  MEAN_TXXT    = mean(TXXT, na.rm = TRUE)
+#            , MAX_TXXT_CUT = quantile(TXXT, probs = .998, na.rm = TRUE) 
             , ADD_TXXT = mean(ADD_TXXT, na.rm = TRUE)
             , NBR_ENG  = mean(NBR_ENG, na.rm = TRUE)
             , FUEL_IDLE= mean(FUEL_IDLE, na.rm = TRUE)
             , FUEL_TO  = mean(FUEL_TO, na.rm = TRUE)
-            , .groups = "drop")
+            , .groups = "drop") %>% 
+  rename(TXXT = MEAN_TXXT)
 
 # join to replace NAs == fill missing == rows_patch()
 ds_fuel <- ds_fuel %>% 
-  rows_patch(avg_fuel, by = c("SRC_PHASE", "CLASS"))
+  rows_patch(avg_fuel, by = c("SRC_PHASE", "CLASS")) %>% 
+  mutate(ADD_FUEL = ADD_TXXT * NBR_ENG * FUEL_IDLE * 60) 
 ```
 
 ok        <- ds_fuel %>% filter(FUEL_MAP == TRUE & !is.na(ADD_TXXT))
